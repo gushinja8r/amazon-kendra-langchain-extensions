@@ -1,7 +1,6 @@
 # Conversational Retrieval QA Chatbot, built using Langflow and Streamlit
 # Author: Gary A. Stafford
 # Date: 2023-08-13
-# Requirements: pip install streamlit langchain -Uq
 # Usage: streamlit run app_v2.py <anthropic|flanxl|flanxxl|openai|llama2chat> --server.runOnSave true
 
 import sys
@@ -157,6 +156,7 @@ def write_top_bar():
             provider = PROVIDER_MAP[selected_provider]
         else:
             provider = selected_provider.capitalize()
+        # st.markdown(f"#### {HEADER_TITLE}!")
         st.markdown(f"#### {HEADER_TITLE} and {provider}!")
     with col3:
         clear = st.button("Clear Chat")
