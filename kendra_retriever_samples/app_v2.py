@@ -55,7 +55,7 @@ def main():
             elif sys.argv[1] == "openai":
                 st.session_state["llm_app"] = openai
                 st.session_state["llm_chain"] = openai.build_chain()
-            elif sys.argv[1] == "llama213b":
+            elif sys.argv[1] == "llama2chat":
                 st.session_state["llm_app"] = llama2chat
                 st.session_state["llm_chain"] = llama2chat.build_chain()
             else:
