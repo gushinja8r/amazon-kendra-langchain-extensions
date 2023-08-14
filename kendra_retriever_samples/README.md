@@ -5,7 +5,7 @@ This repo provides a set of samples to work with [Langchain](https://github.com/
 
 Clone the repository
 ```bash
-git clone https://github.com/aws-samples/amazon-kendra-langchain-extensions.git
+git clone https://github.com/garystafford/amazon-kendra-langchain-extensions.git
 ```
 
 Move to the repo dir
@@ -15,7 +15,7 @@ cd amazon-kendra-langchain-extensions
 
 Move to the samples dir
 ```bash
-cd kendra_retriever_samples
+cd kendra_retriever_samples-workshop
 ```
 
 Install the dependencies
@@ -41,6 +41,7 @@ export AWS_REGION="<YOUR-AWS-REGION>"
 export KENDRA_INDEX_ID="<YOUR-KENDRA-INDEX-ID>"
 export FLAN_XL_ENDPOINT="<YOUR-SAGEMAKER-ENDPOINT-FOR-FLAN-T-XL>"
 export FLAN_XXL_ENDPOINT="<YOUR-SAGEMAKER-ENDPOINT-FOR-FLAN-T-XXL>"
+export LLAMA2_CHAT_ENDPOINT="<YOUR-SAGEMAKER-ENDPOINT-FOR-LLAMA-2-CHAT>"
 export OPENAI_API_KEY="<YOUR-OPEN-AI-API-KEY>"
 export ANTHROPIC_API_KEY="<YOUR-ANTHROPIC-API-KEY>"
 ```
