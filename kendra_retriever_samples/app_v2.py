@@ -24,6 +24,7 @@ PAGE_FAVICON = "images/ai-icon.png"
 SHOW_DOC_SOURCES = True
 TEXT_INPUT_PROMPT = "You are talking to an AI, ask any question."
 TEXT_INPUT_PLACEHOLDER = "What is Amazon SageMaker?"
+TEXT_INPUT_HELP = "For more help, see our official documentation: https://docs.aws.amazon.com/sagemaker/index.html"
 SHOW_SAMPLE_QUESTIONS = False
 MAX_HISTORY_LENGTH = 5
 PROVIDER_MAP = {
@@ -142,6 +143,7 @@ def main():
     st.text_input(
         TEXT_INPUT_PROMPT,
         placeholder=TEXT_INPUT_PLACEHOLDER,
+        help=TEXT_INPUT_HELP,
         key="input",
         on_change=handle_input,
     )
