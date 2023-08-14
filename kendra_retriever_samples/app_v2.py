@@ -30,8 +30,8 @@ MAX_HISTORY_LENGTH = 5
 PROVIDER_MAP = {
     "openai": "Open AI",
     "anthropic": "Anthropic",
-    "flanxl": "Flan XL",
-    "flanxxl": "Flan XXL",
+    "flanxl": "FLAN-T5 XL",
+    "flanxxl": "FLAN-T5 XXL",
     "llama2chat": "Llama-2 13B Chat",
 }
 
