@@ -1,3 +1,9 @@
+# Conversational Retrieval QA Chatbot, built using Langflow and Streamlit
+# Author: Gary A. Stafford
+# Date: 2023-08-13
+# Requirements: pip install streamlit langchain -Uq
+# Usage: streamlit run app_v2.py <anthropic|flanxl|flanxxl|openai|llama2chat> --server.runOnSave true
+
 import sys
 
 import streamlit as st
@@ -5,6 +11,7 @@ import streamlit as st
 import kendra_chat_anthropic as anthropic
 import kendra_chat_flan_xl as flanxl
 import kendra_chat_flan_xxl as flanxxl
+import kendra_chat_llama2_chat as llama2chat
 import kendra_chat_open_ai as openai
 
 # ****** CONFIGURABLE PARAMETERS ******
@@ -24,6 +31,7 @@ PROVIDER_MAP = {
     "anthropic": "Anthropic",
     "flanxl": "Flan XL",
     "flanxxl": "Flan XXL",
+    "llama2chat": "Llama-2 13B Chat",
 }
 
 
@@ -47,11 +55,14 @@ def main():
             elif sys.argv[1] == "openai":
                 st.session_state["llm_app"] = openai
                 st.session_state["llm_chain"] = openai.build_chain()
+            elif sys.argv[1] == "llama213b":
+                st.session_state["llm_app"] = llama2chat
+                st.session_state["llm_chain"] = llama2chat.build_chain()
             else:
                 raise Exception("Unsupported LLM: ", sys.argv[1])
         else:
             raise Exception(
-                "Usage: streamlit run app.py <anthropic|flanxl|flanxxl|openai>"
+                "Usage: streamlit run app.py <anthropic|flanxl|flanxxl|openai|llama2chat>"
             )
 
     if "chat_history" not in st.session_state:
@@ -119,6 +130,7 @@ def main():
                 """
                     - What is Amazon SageMaker?
                     - What are some of its major features?
+                    - How do I get started using it?
                     - Tell me about Amazon SageMaker Feature Store.
                     - What does the Inference Recommender do?
                     - What is Autopilot?

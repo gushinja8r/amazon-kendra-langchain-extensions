@@ -1,8 +1,9 @@
-from langchain.retrievers import AmazonKendraRetriever
-from langchain.chains import RetrievalQA
-from langchain.prompts import PromptTemplate
-from langchain.chat_models import ChatAnthropic as Anthropic
 import os
+
+from langchain.chains import RetrievalQA
+from langchain.chat_models import ChatAnthropic as Anthropic
+from langchain.prompts import PromptTemplate
+from langchain.retrievers import AmazonKendraRetriever
 
 
 def build_chain():

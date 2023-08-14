@@ -1,11 +1,13 @@
-from langchain.retrievers import AmazonKendraRetriever
-from langchain.chains import ConversationalRetrievalChain
-from langchain.prompts import PromptTemplate
-from langchain import SagemakerEndpoint
-from langchain.llms.sagemaker_endpoint import LLMContentHandler
-import sys
 import json
 import os
+import sys
+
+from langchain import SagemakerEndpoint
+from langchain.chains import ConversationalRetrievalChain
+from langchain.llms.sagemaker_endpoint import LLMContentHandler
+from langchain.prompts import PromptTemplate
+from langchain.retrievers import AmazonKendraRetriever
+
 
 class bcolors:
     HEADER = '\033[95m'

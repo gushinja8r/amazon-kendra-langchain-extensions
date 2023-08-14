@@ -1,11 +1,11 @@
-from langchain.retrievers import AmazonKendraRetriever
-from langchain.chains import RetrievalQA
-from langchain import OpenAI
-from langchain.prompts import PromptTemplate
-from langchain import SagemakerEndpoint
-from langchain.llms.sagemaker_endpoint import LLMContentHandler
 import json
 import os
+
+from langchain import SagemakerEndpoint
+from langchain.chains import RetrievalQA
+from langchain.llms.sagemaker_endpoint import LLMContentHandler
+from langchain.prompts import PromptTemplate
+from langchain.retrievers import AmazonKendraRetriever
 
 
 def build_chain():

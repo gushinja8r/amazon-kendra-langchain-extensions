@@ -1,17 +1,17 @@
-from langchain.retrievers import AmazonKendraRetriever
-from langchain.chains import ConversationalRetrievalChain
-from langchain.prompts import PromptTemplate
-from langchain import OpenAI
-import sys
 import os
+import sys
+
+from langchain.chains import ConversationalRetrievalChain
+from langchain.chat_models import ChatOpenAI
+from langchain.prompts import PromptTemplate
+from langchain.retrievers import AmazonKendraRetriever
 
 MAX_HISTORY_LENGTH = 5
 
 def build_chain():
-  region = os.environ["AWS_REGION"]
   kendra_index_id = os.environ["KENDRA_INDEX_ID"]
 
-  llm = OpenAI(batch_size=5, temperature=0, max_tokens=300)
+  llm = ChatOpenAI(temperature=0, max_tokens=300, model="gpt-3.5-turbo")
       
   retriever = AmazonKendraRetriever(index_id=kendra_index_id)
 

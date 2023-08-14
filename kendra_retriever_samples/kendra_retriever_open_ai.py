@@ -1,12 +1,12 @@
-from langchain.retrievers import AmazonKendraRetriever
-from langchain.chains import RetrievalQA
-from langchain import OpenAI
-from langchain.prompts import PromptTemplate
 import os
+
+from langchain import OpenAI
+from langchain.chains import RetrievalQA
+from langchain.prompts import PromptTemplate
+from langchain.retrievers import AmazonKendraRetriever
 
 
 def build_chain():
-  region = os.environ["AWS_REGION"]
   kendra_index_id = os.environ["KENDRA_INDEX_ID"]
 
   llm = OpenAI(batch_size=5, temperature=0, max_tokens=300)

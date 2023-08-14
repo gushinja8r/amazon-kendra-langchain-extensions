@@ -1,9 +1,11 @@
-from langchain.retrievers import AmazonKendraRetriever
-from langchain.chains import ConversationalRetrievalChain
-from langchain.prompts import PromptTemplate
-from langchain.chat_models import ChatAnthropic as Anthropic
-import sys
 import os
+import sys
+
+from langchain.chains import ConversationalRetrievalChain
+from langchain.chat_models import ChatAnthropic as Anthropic
+from langchain.prompts import PromptTemplate
+from langchain.retrievers import AmazonKendraRetriever
+
 
 class bcolors:
   HEADER = '\033[95m'

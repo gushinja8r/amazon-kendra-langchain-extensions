@@ -1,11 +1,11 @@
-from langchain.retrievers import AmazonKendraRetriever
-from langchain.chains import RetrievalQA
-from langchain import OpenAI
-from langchain.prompts import PromptTemplate
-from langchain import SagemakerEndpoint
-from langchain.llms.sagemaker_endpoint import LLMContentHandler
 import json
 import os
+
+from langchain import SagemakerEndpoint
+from langchain.chains import RetrievalQA
+from langchain.llms.sagemaker_endpoint import LLMContentHandler
+from langchain.prompts import PromptTemplate
+from langchain.retrievers import AmazonKendraRetriever
 
 
 def build_chain():
@@ -17,22 +17,22 @@ def build_chain():
         content_type = "application/json"
         accepts = "application/json"
 
-        def transform_input(self, prompt: str, model_kwargs: dict) -> bytes:
-            input_str = json.dumps({"inputs": prompt, "parameters": model_kwargs})
-            return input_str.encode('utf-8')
-        
+        def transform_input(self, prompt: str, model_kwargs=dict) -> bytes:
+            input_str = json.dumps({"text_inputs": prompt, **model_kwargs})
+            return input_str.encode("utf-8")
+
         def transform_output(self, output: bytes) -> str:
             response_json = json.loads(output.read().decode("utf-8"))
-            return response_json[0]["generated_text"]
+            return response_json["generated_texts"][0]
 
     content_handler = ContentHandler()
 
-    llm=SagemakerEndpoint(
-            endpoint_name=endpoint_name, 
-            region_name=region, 
-            model_kwargs={"temperature":1e-10, "max_length": 500},
-            content_handler=content_handler
-        )
+    llm = SagemakerEndpoint(
+        endpoint_name=endpoint_name,
+        region_name=region,
+        model_kwargs={"temperature": 1e-10, "max_length": 500},
+        content_handler=content_handler,
+    )
 
     retriever = AmazonKendraRetriever(index_id=kendra_index_id)
 
@@ -50,27 +50,26 @@ def build_chain():
     )
     chain_type_kwargs = {"prompt": PROMPT}
     qa = RetrievalQA.from_chain_type(
-        llm, 
-        chain_type="stuff", 
-        retriever=retriever, 
+        llm,
+        chain_type="stuff",
+        retriever=retriever,
         chain_type_kwargs=chain_type_kwargs,
-        return_source_documents=True
+        return_source_documents=True,
     )
     return qa
+
 
 def run_chain(chain, prompt: str, history=[]):
     result = chain(prompt)
     # To make it compatible with chat samples
-    return {
-        "answer": result['result'],
-        "source_documents": result['source_documents']
-    }
+    return {"answer": result["result"], "source_documents": result["source_documents"]}
+
 
 if __name__ == "__main__":
     chain = build_chain()
     result = run_chain(chain, "What's SageMaker?")
-    print(result['answer'])
-    if 'source_documents' in result:
-        print('Sources:')
-        for d in result['source_documents']:
-          print(d.metadata['source'])
+    print(result["answer"])
+    if "source_documents" in result:
+        print("Sources:")
+        for d in result["source_documents"]:
+            print(d.metadata["source"])
