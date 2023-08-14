@@ -1,5 +1,7 @@
-langchain
-boto3
-openai
 anthropic
+awscli
+boto3
+botocore
+langchain
+openai
 streamlit
