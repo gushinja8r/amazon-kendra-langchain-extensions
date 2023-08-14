@@ -1,7 +1,6 @@
 # Conversational Retrieval QA Chatbot, built using Langflow and Streamlit
 # Author: Gary A. Stafford
 # Date: 2023-08-13
-# Requirements: pip install streamlit langchain -Uq
 # Usage: streamlit run app_v2.py <anthropic|flanxl|flanxxl|openai|llama2chat> --server.runOnSave true
 
 import sys
@@ -17,7 +16,7 @@ import kendra_chat_open_ai as openai
 # ****** CONFIGURABLE PARAMETERS ******
 USER_ICON = "images/user-icon.png"
 AI_ICON = "images/ai-icon.png"
-HEADER_TITLE = "An AI App powered by Amazon Kendra!"
+HEADER_TITLE = "An AI App powered by Amazon Kendra"
 HEADER_LOGO = "images/ai-icon.png"
 PAGE_TITLE = "AI Chatbot"
 PAGE_FAVICON = "images/ai-icon.png"
@@ -152,13 +151,12 @@ def write_top_bar():
     with col1:
         st.image(HEADER_LOGO, use_column_width="always")
     with col2:
-        # selected_provider = sys.argv[1]
-        # if selected_provider in PROVIDER_MAP:
-        #     provider = PROVIDER_MAP[selected_provider]
-        # else:
-        #     provider = selected_provider.capitalize()
-        header = HEADER_TITLE  # {provider}
-        st.markdown(f"### {header}")
+        selected_provider = sys.argv[1]
+        if selected_provider in PROVIDER_MAP:
+            provider = PROVIDER_MAP[selected_provider]
+        else:
+            provider = selected_provider.capitalize()
+        st.markdown(f"#### {HEADER_TITLE} and # {provider}!")
     with col3:
         clear = st.button("Clear Chat")
     return clear
