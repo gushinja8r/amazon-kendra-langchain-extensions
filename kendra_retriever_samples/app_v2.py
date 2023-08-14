@@ -1,6 +1,7 @@
 # Conversational Retrieval QA Chatbot, built using Langflow and Streamlit
 # Author: Gary A. Stafford
 # Date: 2023-08-13
+# Requirements: pip install -r requirements.txt -U
 # Usage: streamlit run app_v2.py <anthropic|flanxl|flanxxl|openai|llama2chat> --server.runOnSave true
 
 import sys
