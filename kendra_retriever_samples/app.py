@@ -9,7 +9,7 @@ import sys
 
 import streamlit as st
 
-from kendra_retriever_samples.model_providers import (
+from model_providers import (
     kendra_chat_bedrock_claude as bedrockclaude,
     kendra_chat_open_ai as openai,
     kendra_chat_flan_xxl as flanxxl,
@@ -26,7 +26,7 @@ PAGE_TITLE = os.environ.get("PAGE_TITLE", "AI Chatbot")
 PAGE_FAVICON = os.environ.get("PAGE_FAVICON", "images/ai-icon.png")
 SHOW_DOC_SOURCES = os.environ.get("SHOW_DOC_SOURCES", True)
 TEXT_INPUT_PROMPT = os.environ.get(
-    "TEXT_INPUT_PROMPT", "Ask me any question about Amazon SageMaker."
+    "TEXT_INPUT_PROMPT", "Ask me any questions about Amazon SageMaker."
 )
 TEXT_INPUT_PLACEHOLDER = os.environ.get("TEXT_INPUT_PLACEHOLDER", "What is Amazon SageMaker?")
 TEXT_INPUT_HELP = os.environ.get(
