@@ -1,46 +1,35 @@
 # Conversational Retrieval QA Chatbot, built using Langflow and Streamlit
 # Author: Gary A. Stafford
-# Date: 2023-08-19
+# Date: 2023-08-13
 # Requirements: pip install -r requirements.txt -U
-# Usage: streamlit run app.py <flanxl|flanxxl|llama2chat|bedrockclaude|openai> --server.runOnSave true
+# Usage: streamlit run app.py <anthropic|flanxl|flanxxl|openai> --server.runOnSave true
 
-import os
 import sys
 
 import streamlit as st
 
-from kendra_retriever_samples.model_providers import (
-    kendra_chat_bedrock_claude as bedrockclaude,
-    kendra_chat_open_ai as openai,
-    kendra_chat_flan_xxl as flanxxl,
-    kendra_chat_flan_xl as flanxl,
-    kendra_chat_llama2_chat as llama2chat,
-)
+from kendra_retriever_samples.model_providers import kendra_chat_open_ai as openai, \
+    kendra_chat_flan_xxl as flanxxl, kendra_chat_flan_xl as flanxl
+from kendra_retriever_samples.prelims import kendra_chat_anthropic as anthropic
 
 # ****** CONFIGURABLE PARAMETERS ******
-USER_ICON = os.environ.get("USER_ICON", "images/user-icon.png")
-AI_ICON = os.environ.get("AI_ICON", "images/ai-icon.png")
-HEADER_TITLE = os.environ.get("HEADER_TITLE", "A Chatbot powered by Amazon Kendra")
-HEADER_LOGO = os.environ.get("HEADER_LOGO", "images/ai-icon.png")
-PAGE_TITLE = os.environ.get("PAGE_TITLE", "AI Chatbot")
-PAGE_FAVICON = os.environ.get("PAGE_FAVICON", "images/ai-icon.png")
-SHOW_DOC_SOURCES = os.environ.get("SHOW_DOC_SOURCES", True)
-TEXT_INPUT_PROMPT = os.environ.get(
-    "TEXT_INPUT_PROMPT", "Ask me any question about Amazon SageMaker."
-)
-TEXT_INPUT_PLACEHOLDER = os.environ.get("TEXT_INPUT_PLACEHOLDER", "What is Amazon SageMaker?")
-TEXT_INPUT_HELP = os.environ.get(
-    "TEXT_INPUT_HELP",
-    "For more help, see our official documentation: https://docs.aws.amazon.com/sagemaker/index.html",
-)
-SHOW_SAMPLE_QUESTIONS = os.environ.get("SHOW_SAMPLE_QUESTIONS", True)
-MAX_HISTORY_LENGTH = os.environ.get("MAX_HISTORY_LENGTH", 5)
+USER_ICON = "images/user-icon.png"
+AI_ICON = "images/ai-icon.png"
+HEADER_TITLE = "A Chatbot powered by Amazon Kendra"
+HEADER_LOGO = "images/ai-icon.png"
+PAGE_TITLE = "AI Chatbot"
+PAGE_FAVICON = "images/ai-icon.png"
+SHOW_DOC_SOURCES = True
+TEXT_INPUT_PROMPT = "You are talking to an AI, ask any question."
+TEXT_INPUT_PLACEHOLDER = "What is Amazon SageMaker?"
+TEXT_INPUT_HELP = "For more help, see our official documentation: https://docs.aws.amazon.com/sagemaker/index.html"
+SHOW_SAMPLE_QUESTIONS = False
+MAX_HISTORY_LENGTH = 5
 PROVIDER_MAP = {
-    "openai": os.environ.get("OPENAI_MODEL_NAME", "Open AI"),
-    "flanxl": os.environ.get("FLANXL_MODEL_NAME", "Flan XL"),
-    "flanxxl": os.environ.get("FLANXXL_MODEL_NAME", "Flan XXL"),
-    "llama2chat": os.environ.get("LLAMA_MODEL_NAME", "Llama-2 13B Chat"),
-    "bedrockclaude": os.environ.get("BEDROCK_CLAUDE_MODEL_NAME", "Bedrock Anthropic Claude Instant v1.1"),
+    "openai": "Open AI",
+    "anthropic": "Anthropic",
+    "flanxl": "Flan XL",
+    "flanxxl": "Flan XXL",
 }
 
 
@@ -52,7 +41,10 @@ def main():
 
     if "llm_chain" not in st.session_state:
         if len(sys.argv) > 1:
-            if sys.argv[1] == "flanxl":
+            if sys.argv[1] == "anthropic":
+                st.session_state["llm_app"] = anthropic
+                st.session_state["llm_chain"] = anthropic.build_chain()
+            elif sys.argv[1] == "flanxl":
                 st.session_state["llm_app"] = flanxl
                 st.session_state["llm_chain"] = flanxl.build_chain()
             elif sys.argv[1] == "flanxxl":
@@ -61,17 +53,11 @@ def main():
             elif sys.argv[1] == "openai":
                 st.session_state["llm_app"] = openai
                 st.session_state["llm_chain"] = openai.build_chain()
-            elif sys.argv[1] == "llama2chat":
-                st.session_state["llm_app"] = llama2chat
-                st.session_state["llm_chain"] = llama2chat.build_chain()
-            elif sys.argv[1] == "bedrockclaude":
-                st.session_state["llm_app"] = bedrockclaude
-                st.session_state["llm_chain"] = bedrockclaude.build_chain()
             else:
                 raise Exception("Unsupported LLM: ", sys.argv[1])
         else:
             raise Exception(
-                "Usage: streamlit run app.py <flanxl|flanxxl|llama2chat|bedrockclaude|openai>"
+                "Usage: streamlit run app.py <anthropic|flanxl|flanxxl|openai>"
             )
 
     if "chat_history" not in st.session_state:
@@ -162,13 +148,13 @@ def write_top_bar():
     with col1:
         st.image(HEADER_LOGO, use_column_width="always")
     with col2:
-        selected_provider = sys.argv[1]
-        if selected_provider in PROVIDER_MAP:
-            provider = PROVIDER_MAP[selected_provider]
-        else:
-            provider = selected_provider.capitalize()
-        # st.markdown(f"#### {HEADER_TITLE}!")
-        st.markdown(f"#### {HEADER_TITLE} and {provider}!")
+        # selected_provider = sys.argv[1]
+        # if selected_provider in PROVIDER_MAP:
+        #     provider = PROVIDER_MAP[selected_provider]
+        # else:
+        #     provider = selected_provider.capitalize()
+        header = HEADER_TITLE  # {provider}
+        st.markdown(f"### {header}")
     with col3:
         clear = st.button("Clear Chat")
     return clear
