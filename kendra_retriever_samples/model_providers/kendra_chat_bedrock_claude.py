@@ -8,8 +8,8 @@ from langchain.retrievers import AmazonKendraRetriever
 # ***** CONFIGURABLE PARAMETERS *****
 REGION_NAME = os.environ.get("REGION_NAME", "us-east-1")
 MODEL_NAME = os.environ.get("MODEL_NAME", "anthropic.claude-instant-v1")
-TEMPERATURE = os.environ.get("TEMPERATURE", 0.3)
-MAX_TOKENS_TO_SAMPLE = os.environ.get("MAX_TOKENS_TO_SAMPLE", 4096)
+TEMPERATURE = os.environ.get("TEMPERATURE",1e-10)
+MAX_TOKENS_TO_SAMPLE = os.environ.get("MAX_TOKENS_TO_SAMPLE", 512)
 TOP_K = os.environ.get("TOP_K", 250)
 TOP_P = os.environ.get("TOP_P", 1)
 STOP_SEQUENCES = os.environ.get("STOP_SEQUENCES", ["\n\nHuman"])

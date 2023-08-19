@@ -11,7 +11,7 @@ MAX_HISTORY_LENGTH = 5
 def build_chain():
   kendra_index_id = os.environ["KENDRA_INDEX_ID"]
 
-  llm = ChatOpenAI(temperature=0, max_tokens=300, model="gpt-3.5-turbo")
+  llm = ChatOpenAI(temperature=1e-10, max_tokens=512, model="gpt-3.5-turbo")
       
   retriever = AmazonKendraRetriever(index_id=kendra_index_id)
 

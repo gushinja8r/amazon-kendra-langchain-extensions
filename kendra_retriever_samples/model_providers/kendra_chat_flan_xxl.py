@@ -44,7 +44,7 @@ def build_chain():
   llm=SagemakerEndpoint(
           endpoint_name=endpoint_name, 
           region_name=region, 
-          model_kwargs={"temperature":0.0, "max_length": 500},
+          model_kwargs={"temperature":1e-10, "max_length": 512},
           content_handler=content_handler
       )
       
