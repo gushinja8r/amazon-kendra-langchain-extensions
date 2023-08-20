@@ -2,7 +2,7 @@
 # Author: Gary A. Stafford
 # Date: 2023-08-19
 # Requirements: pip install -r requirements.txt -U
-# Usage: streamlit run app.py <flanxl|flanxxl|llama2chat|bedrockclaude|bedrocktitan|bedrockai21labs|openai> --server.runOnSave true
+# Usage: streamlit run app.py <flanxl|flanxxl|llama2chat|falcon|bedrockclaude|bedrocktitan|bedrockai21labs|openai> --server.runOnSave true
 
 import os
 import sys
@@ -17,6 +17,7 @@ from model_providers import (
     kendra_chat_flan_xxl as flanxxl,
     kendra_chat_flan_xl as flanxl,
     kendra_chat_llama2_chat as llama2chat,
+    kendra_chat_falcon as falcon,
 )
 
 # ****** CONFIGURABLE PARAMETERS ******
@@ -44,6 +45,7 @@ PROVIDER_MAP = {
     "flanxl": os.environ.get("FLANXL_MODEL_NAME", "Flan-T5-XL"),
     "flanxxl": os.environ.get("FLANXXL_MODEL_NAME", "Flan-T5-XXL"),
     "llama2chat": os.environ.get("LLAMA_MODEL_NAME", "Llama-2 13B Chat"),
+    "falcon": os.environ.get("FALCON_MODEL_NAME", "Falcon 40B BF16"),
     "bedrockclaude": os.environ.get(
         "BEDROCK_CLAUDE_MODEL_NAME", "Bedrock Anthropic Claude Instant v1.1"
     ),
@@ -76,6 +78,9 @@ def main():
             elif sys.argv[1] == "llama2chat":
                 st.session_state["llm_app"] = llama2chat
                 st.session_state["llm_chain"] = llama2chat.build_chain()
+            elif sys.argv[1] == "falcon":
+                st.session_state["llm_app"] = falcon
+                st.session_state["llm_chain"] = falcon.build_chain()
             elif sys.argv[1] == "bedrockclaude":
                 st.session_state["llm_app"] = bedrockclaude
                 st.session_state["llm_chain"] = bedrockclaude.build_chain()
@@ -89,7 +94,7 @@ def main():
                 raise Exception("Unsupported LLM: ", sys.argv[1])
         else:
             raise Exception(
-                "Usage: streamlit run app.py <flanxl|flanxxl|llama2chat|bedrockclaude|bedrocktitan|bedrockai21labs|openai>"
+                "Usage: streamlit run app.py <flanxl|flanxxl|llama2chat|falcon|bedrockclaude|bedrocktitan|bedrockai21labs|openai>"
             )
 
     if "chat_history" not in st.session_state:
