@@ -47,13 +47,13 @@ PROVIDER_MAP = {
     "llama2chat": os.environ.get("LLAMA_MODEL_NAME", "Llama-2 13B Chat"),
     "falcon": os.environ.get("FALCON_MODEL_NAME", "Falcon 40B BF16"),
     "bedrockclaude": os.environ.get(
-        "BEDROCK_CLAUDE_MODEL_NAME", "Bedrock Anthropic Claude Instant v1.1"
+        "BEDROCK_CLAUDE_MODEL_NAME", "Bedrock Anthropic Claude"
     ),
     "bedrocktitan": os.environ.get(
-        "BEDROCK_TITAN_MODEL_NAME", "Titan Text Large v1.01"
+        "BEDROCK_TITAN_MODEL_NAME", "Titan Text Large"
     ),
     "bedrockai21labs": os.environ.get(
-        "BEDROCK_AI21_LABS_MODEL_NAME", "AI21 Labs Jurassic-2 Ultra v1"
+        "BEDROCK_AI21_LABS_MODEL_NAME", "AI21 Labs Jurassic-2"
     ),
 }
 
