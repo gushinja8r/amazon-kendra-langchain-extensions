@@ -2,7 +2,7 @@
 # Author: Gary A. Stafford
 # Date: 2023-08-19
 # Requirements: pip install -r requirements.txt -U
-# Usage: streamlit run app.py <flanxl|flanxxl|llama2chat|bedrockclaude|openai> --server.runOnSave true
+# Usage: streamlit run app.py <flanxl|flanxxl|llama2chat|bedrockclaude|bedrocktitan|bedrockai21labs|openai> --server.runOnSave true
 
 import os
 import sys
@@ -10,7 +10,9 @@ import sys
 import streamlit as st
 
 from model_providers import (
-    kendra_chat_bedrock_claude as bedrockclaude,
+    kendra_chat_bedrock_anthropic_claude as bedrockclaude,
+    kendra_chat_bedrock_amazon_titan as bedrocktitan,
+    kendra_chat_bedrock_ai21_labs as bedrockai21labs,
     kendra_chat_open_ai as openai,
     kendra_chat_flan_xxl as flanxxl,
     kendra_chat_flan_xl as flanxl,
@@ -26,9 +28,11 @@ PAGE_TITLE = os.environ.get("PAGE_TITLE", "AI Chatbot")
 PAGE_FAVICON = os.environ.get("PAGE_FAVICON", "images/ai-icon.png")
 SHOW_DOC_SOURCES = os.environ.get("SHOW_DOC_SOURCES", True)
 TEXT_INPUT_PROMPT = os.environ.get(
-    "TEXT_INPUT_PROMPT", "Ask me any questions about Amazon SageMaker."
+    "TEXT_INPUT_PROMPT", "Ask me any question about Amazon SageMaker."
 )
-TEXT_INPUT_PLACEHOLDER = os.environ.get("TEXT_INPUT_PLACEHOLDER", "What is Amazon SageMaker?")
+TEXT_INPUT_PLACEHOLDER = os.environ.get(
+    "TEXT_INPUT_PLACEHOLDER", "What is Amazon SageMaker?"
+)
 TEXT_INPUT_HELP = os.environ.get(
     "TEXT_INPUT_HELP",
     "For more help, see our official documentation: https://docs.aws.amazon.com/sagemaker/index.html",
@@ -36,11 +40,19 @@ TEXT_INPUT_HELP = os.environ.get(
 SHOW_SAMPLE_QUESTIONS = os.environ.get("SHOW_SAMPLE_QUESTIONS", True)
 MAX_HISTORY_LENGTH = os.environ.get("MAX_HISTORY_LENGTH", 5)
 PROVIDER_MAP = {
-    "openai": os.environ.get("OPENAI_MODEL_NAME", "Open AI"),
-    "flanxl": os.environ.get("FLANXL_MODEL_NAME", "Flan XL"),
-    "flanxxl": os.environ.get("FLANXXL_MODEL_NAME", "Flan XXL"),
+    "openai": os.environ.get("OPENAI_MODEL_NAME", "OpenAI GPT-3.5 Turbo"),
+    "flanxl": os.environ.get("FLANXL_MODEL_NAME", "Flan-T5-XL"),
+    "flanxxl": os.environ.get("FLANXXL_MODEL_NAME", "Flan-T5-XXL"),
     "llama2chat": os.environ.get("LLAMA_MODEL_NAME", "Llama-2 13B Chat"),
-    "bedrockclaude": os.environ.get("BEDROCK_CLAUDE_MODEL_NAME", "Bedrock Anthropic Claude Instant v1.1"),
+    "bedrockclaude": os.environ.get(
+        "BEDROCK_CLAUDE_MODEL_NAME", "Bedrock Anthropic Claude Instant v1.1"
+    ),
+    "bedrocktitan": os.environ.get(
+        "BEDROCK_TITAN_MODEL_NAME", "Titan Text Large v1.01"
+    ),
+    "bedrockai21labs": os.environ.get(
+        "BEDROCK_AI21_LABS_MODEL_NAME", "AI21 Labs Jurassic-2 Ultra v1"
+    ),
 }
 
 
@@ -67,11 +79,17 @@ def main():
             elif sys.argv[1] == "bedrockclaude":
                 st.session_state["llm_app"] = bedrockclaude
                 st.session_state["llm_chain"] = bedrockclaude.build_chain()
+            elif sys.argv[1] == "bedrocktitan":
+                st.session_state["llm_app"] = bedrocktitan
+                st.session_state["llm_chain"] = bedrocktitan.build_chain()
+            elif sys.argv[1] == "bedrockai21labs":
+                st.session_state["llm_app"] = bedrockai21labs
+                st.session_state["llm_chain"] = bedrockai21labs.build_chain()
             else:
                 raise Exception("Unsupported LLM: ", sys.argv[1])
         else:
             raise Exception(
-                "Usage: streamlit run app.py <flanxl|flanxxl|llama2chat|bedrockclaude|openai>"
+                "Usage: streamlit run app.py <flanxl|flanxxl|llama2chat|bedrockclaude|bedrocktitan|bedrockai21labs|openai>"
             )
 
     if "chat_history" not in st.session_state:
