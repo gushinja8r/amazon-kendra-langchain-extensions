@@ -8,7 +8,9 @@ from langchain.retrievers import AmazonKendraRetriever
 # ***** CONFIGURABLE PARAMETERS *****
 MODEL_NAME = os.environ.get("MODEL_NAME", "gpt-3.5-turbo")
 TEMPERATURE = os.environ.get("TEMPERATURE", 1e-10)
-MAX_TOKENS = os.environ.get("MAX_TOKENS", 512)
+MAX_TOKENS = os.environ.get("MAX_TOKENS", 1024)
+TOP_K = os.environ.get("TOP_K", 250)
+TOP_P = os.environ.get("TOP_P", .5)
 KENDRA_INDEX_ID = os.environ["KENDRA_INDEX_ID"]
 MAX_HISTORY_LENGTH = 5
 # ******************************************************************

@@ -11,9 +11,9 @@ from langchain.retrievers import AmazonKendraRetriever
 REGION_NAME = os.environ.get("REGION_NAME", "us-east-1")
 ENDPOINT_NAME = os.environ["LLAMA2_CHAT_ENDPOINT"]
 TEMPERATURE = os.environ.get("TEMPERATURE", 1e-10)
-MAX_NEW_TOKENS = os.environ.get("MAX_NEW_TOKENS", 512)
+MAX_NEW_TOKENS = os.environ.get("MAX_NEW_TOKENS", 1024)
 TOP_K = os.environ.get("TOP_K", 250)
-TOP_P = os.environ.get("TOP_P", 1)
+TOP_P = os.environ.get("TOP_P", .5)
 STOP_SEQUENCES = os.environ.get("STOP_SEQUENCES", [])
 KENDRA_INDEX_ID = os.environ["KENDRA_INDEX_ID"]
 MAX_HISTORY_LENGTH = 5
@@ -36,12 +36,12 @@ def build_chain():
                     "parameters": model_kwargs,
                 }
             )
-            print(f"input_str: {input_str}\n")
+            # print(f"input_str: {input_str}\n")
             return input_str.encode("utf-8")
 
         def transform_output(self, output: bytes) -> str:
             response_json = json.loads(output.read().decode("utf-8"))
-            print(f"response_json: {response_json}\n")
+            # print(f"response_json: {response_json}\n")
             return response_json[0]["generation"]["content"]
 
     content_handler = ContentHandler()

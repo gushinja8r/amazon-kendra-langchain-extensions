@@ -10,10 +10,11 @@ from langchain.retrievers import AmazonKendraRetriever
 # ***** CONFIGURABLE PARAMETERS *****
 REGION_NAME = os.environ.get("REGION_NAME", "us-east-1")
 ENDPOINT_NAME = os.environ["FALCON_ENDPOINT"]
-TEMPERATURE = os.environ.get("TEMPERATURE", 0.3)
-MAX_NEW_TOKENS = os.environ.get("MAX_NEW_TOKENS", 512)
+TEMPERATURE = os.environ.get("TEMPERATURE", 1e-10)
+MAX_NEW_TOKENS = os.environ.get("MAX_NEW_TOKENS", 1024)
+MAX_LENGTH = os.environ.get("MAX_LENGTH", 10000)
 TOP_K = os.environ.get("TOP_K", 250)
-TOP_P = os.environ.get("TOP_P", .3)
+TOP_P = os.environ.get("TOP_P", .5)
 STOP_SEQUENCES = os.environ.get("STOP_SEQUENCES", ["\nUser:", "<|endoftext|>", "</s>"])
 KENDRA_INDEX_ID = os.environ["KENDRA_INDEX_ID"]
 MAX_HISTORY_LENGTH = 5
@@ -46,7 +47,7 @@ def build_chain():
             "max_length": 10000,
             "max_new_tokens": MAX_NEW_TOKENS,
             "do_sample": True,
-            "top_p": TOP_P,
+            # "top_p": TOP_P,
             "repetition_penalty": 1.03,
             "stop": STOP_SEQUENCES,
         },

@@ -9,9 +9,9 @@ from langchain.retrievers import AmazonKendraRetriever
 REGION_NAME = os.environ.get("REGION_NAME", "us-east-1")
 MODEL_NAME = os.environ.get("MODEL_NAME", "anthropic.claude-instant-v1")
 TEMPERATURE = os.environ.get("TEMPERATURE", 1e-10)
-MAX_TOKENS_TO_SAMPLE = os.environ.get("MAX_TOKENS_TO_SAMPLE", 512)
+MAX_TOKENS_TO_SAMPLE = os.environ.get("MAX_TOKENS_TO_SAMPLE", 1024)
 TOP_K = os.environ.get("TOP_K", 250)
-TOP_P = os.environ.get("TOP_P", 1)
+TOP_P = os.environ.get("TOP_P", .5)
 STOP_SEQUENCES = os.environ.get("STOP_SEQUENCES", ["\n\nHuman"])
 KENDRA_INDEX_ID = os.environ["KENDRA_INDEX_ID"]
 MAX_HISTORY_LENGTH = 5
@@ -22,8 +22,8 @@ def build_chain():
     parameters = {
         "max_tokens_to_sample": MAX_TOKENS_TO_SAMPLE,
         "temperature": TEMPERATURE,
-        "top_k": TOP_K,
-        "top_p": TOP_P,
+        # "top_k": TOP_K,
+        # "top_p": TOP_P,
         "stop_sequences": STOP_SEQUENCES,
     }
 
