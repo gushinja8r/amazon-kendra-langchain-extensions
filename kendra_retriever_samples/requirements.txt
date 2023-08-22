@@ -1,7 +1,7 @@
-anthropic
 awscli
 boto3
 botocore
+cohere
 langchain
 openai
 streamlit

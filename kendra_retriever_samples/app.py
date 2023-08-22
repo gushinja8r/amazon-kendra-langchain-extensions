@@ -2,7 +2,7 @@
 # Author: Gary A. Stafford
 # Date: 2023-08-19
 # Requirements: pip install -r requirements.txt -U
-# Usage: streamlit run app.py <flanxl|flanxxl|llama2chat|falcon|bedrockclaude|bedrocktitan|bedrockai21labs|openai> --server.runOnSave true
+# Usage: streamlit run app.py <flanxl|flanxxl|llama2chat|falcon|bedrockclaude|bedrocktitan|bedrockai21labs|openai|cohere> --server.runOnSave true
 
 import os
 import sys
@@ -18,6 +18,7 @@ from model_providers import (
     kendra_chat_flan_xl as flanxl,
     kendra_chat_llama2_chat as llama2chat,
     kendra_chat_falcon as falcon,
+    kendra_chat_cohere as cohere,
 )
 
 # ****** CONFIGURABLE PARAMETERS ******
@@ -55,6 +56,9 @@ PROVIDER_MAP = {
     "bedrockai21labs": os.environ.get(
         "BEDROCK_AI21_LABS_MODEL_NAME", "AI21 Labs Jurassic-2"
     ),
+    "cohere": os.environ.get(
+        "COHERE_MODEL_NAME", "Cohere Command"
+    ),
 }
 
 
@@ -90,11 +94,14 @@ def main():
             elif sys.argv[1] == "bedrockai21labs":
                 st.session_state["llm_app"] = bedrockai21labs
                 st.session_state["llm_chain"] = bedrockai21labs.build_chain()
+            elif sys.argv[1] == "cohere":
+                st.session_state["llm_app"] = cohere
+                st.session_state["llm_chain"] = cohere.build_chain()
             else:
                 raise Exception("Unsupported LLM: ", sys.argv[1])
         else:
             raise Exception(
-                "Usage: streamlit run app.py <flanxl|flanxxl|llama2chat|falcon|bedrockclaude|bedrocktitan|bedrockai21labs|openai>"
+                "Usage: streamlit run app.py <flanxl|flanxxl|llama2chat|falcon|bedrockclaude|bedrocktitan|bedrockai21labs|openai|cohere>"
             )
 
     if "chat_history" not in st.session_state:
