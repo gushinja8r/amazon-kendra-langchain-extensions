@@ -11,7 +11,7 @@ from langchain.retrievers import AmazonKendraRetriever
 REGION_NAME = os.environ.get("REGION_NAME", "us-east-1")
 ENDPOINT_NAME = os.environ["LLAMA2_CHAT_ENDPOINT"]
 TEMPERATURE = os.environ.get("TEMPERATURE", 1e-10)
-MAX_NEW_TOKENS = os.environ.get("MAX_NEW_TOKENS", 1024)
+MAX_NEW_TOKENS = os.environ.get("MAX_NEW_TOKENS", 1024)  # max number of tokens to generate in the output
 TOP_K = os.environ.get("TOP_K", 250)
 TOP_P = os.environ.get("TOP_P", .5)
 STOP_SEQUENCES = os.environ.get("STOP_SEQUENCES", [])

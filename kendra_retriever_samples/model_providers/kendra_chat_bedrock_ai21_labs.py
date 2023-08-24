@@ -9,7 +9,7 @@ from langchain.retrievers import AmazonKendraRetriever
 REGION_NAME = os.environ.get("REGION_NAME", "us-east-1")
 MODEL_NAME = os.environ.get("MODEL_NAME", "ai21.j2-ultra")
 TEMPERATURE = os.environ.get("TEMPERATURE", 1e-10)
-MAX_TOKENS_TO_SAMPLE = os.environ.get("MAX_TOKENS_TO_SAMPLE", 1024)
+MAX_TOKENS = os.environ.get("MAX_TOKENS", 1024)
 TOP_K = os.environ.get("TOP_K", 250)
 TOP_P = os.environ.get("TOP_P", .5)
 STOP_SEQUENCES = os.environ.get("STOP_SEQUENCES", [])
@@ -20,7 +20,7 @@ MAX_HISTORY_LENGTH = 5
 
 def build_chain():
     parameters = {
-        "maxTokens": MAX_TOKENS_TO_SAMPLE,
+        "maxTokens": MAX_TOKENS,
         "temperature": TEMPERATURE,
         # "topP": TOP_P,
         "stopSequences": STOP_SEQUENCES,
