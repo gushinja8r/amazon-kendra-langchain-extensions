@@ -1,3 +1,4 @@
+anthropic
 awscli
 boto3
 botocore
