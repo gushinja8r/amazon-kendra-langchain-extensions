@@ -1,9 +1,0 @@
-cohere
-langchain
-openai
-streamlit
-
-# during preview period, download these from Bedrock documentation
-botocore-1.31.21-py3-none-any.whl
-boto3-1.28.21-py3-none-any.whl
-awscli-1.29.21-py3-none-any.whl
