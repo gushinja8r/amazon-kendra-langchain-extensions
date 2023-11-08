@@ -1,7 +1,7 @@
 import os
 
 from langchain.chains import ConversationalRetrievalChain
-from langchain.llms.bedrock import Bedrock
+from langchain.llms import Bedrock
 from langchain.prompts import PromptTemplate
 from langchain.retrievers import AmazonKendraRetriever
 
@@ -11,7 +11,7 @@ MODEL_NAME = os.environ.get("MODEL_NAME", "ai21.j2-ultra")
 TEMPERATURE = os.environ.get("TEMPERATURE", 1e-10)
 MAX_TOKENS = os.environ.get("MAX_TOKENS", 1024)
 TOP_K = os.environ.get("TOP_K", 250)
-TOP_P = os.environ.get("TOP_P", .5)
+TOP_P = os.environ.get("TOP_P", 0.5)
 STOP_SEQUENCES = os.environ.get("STOP_SEQUENCES", [])
 KENDRA_INDEX_ID = os.environ["KENDRA_INDEX_ID"]
 MAX_HISTORY_LENGTH = 5

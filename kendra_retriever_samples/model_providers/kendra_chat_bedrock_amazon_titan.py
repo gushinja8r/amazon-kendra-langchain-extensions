@@ -1,7 +1,7 @@
 import os
 
 from langchain.chains import ConversationalRetrievalChain
-from langchain.llms.bedrock import Bedrock
+from langchain.llms import Bedrock
 from langchain.prompts import PromptTemplate
 from langchain.retrievers import AmazonKendraRetriever
 

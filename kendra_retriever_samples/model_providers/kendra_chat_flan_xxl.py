@@ -2,7 +2,7 @@ import json
 import os
 import sys
 
-from langchain import SagemakerEndpoint
+from langchain.llms import SagemakerEndpoint
 from langchain.chains import ConversationalRetrievalChain
 from langchain.llms.sagemaker_endpoint import LLMContentHandler
 from langchain.prompts import PromptTemplate
